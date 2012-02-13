@@ -17,7 +17,7 @@ print "||||||'''RFC List'''||\n";
 print "||RFC||Problem Solved||Plan for new Protocol||\n";
 
 foreach my $num (sort { $a <=> $b } keys %$data) {
-    print "||[[http://tools.ietf.org/html/rfc$num|RFC $num]] $data->{$num}||-||\n";
+    print "||[[http://tools.ietf.org/html/rfc$num|RFC $num]] $data->{$num}||||||\n";
 }
 
 print "\n";
