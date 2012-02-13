@@ -29,7 +29,10 @@ while (<>) {
         next unless $item->{name};
         next unless $item->{name} eq 'DC.Title';
         $data->{$num} = $item->{content};
+        write_file($datafile, encode_json($data));
     }
 }
 
-write_file($datafile, encode_json($data));
+foreach my $key (sort { $a <=> $b } keys %$data) {
+    print "$key: $data->{$key}\n";
+}
