@@ -5,10 +5,13 @@ lack of something that they would make the effort to write the
 document.  These problems need to be solved somehow - maybe
 inherently in a different protocol, maybe explicitly.
 
+There's not even an attempt to include address book, calendaring,
+etc in this list yet!
+
 ||||||'''RFC List'''||
 ||RFC||Problem Solved||Plan for new Protocol||
 ||[[http://tools.ietf.org/html/rfc1730|RFC 1730]] Internet Message Access Protocol - Version 4||Replaced by 3501||See 3501||
-||[[http://tools.ietf.org/html/rfc1731|RFC 1731]] IMAP4 Authentication Mechanisms||||||
+||[[http://tools.ietf.org/html/rfc1731|RFC 1731]] IMAP4 Authentication Mechanisms||Authentication||We need to support good authentication mechanisms to succeed||
 ||[[http://tools.ietf.org/html/rfc1734|RFC 1734]] POP3 AUTHentication command||Additional Auth for POP3||Whatever we do with IMAP auth||
 ||[[http://tools.ietf.org/html/rfc1939|RFC 1939]] Post Office Protocol - Version 3||Simpler access mechanism than IMAP||Less necessary with higher resources available today.  Make sure protocol supports simple access to emails.  Special considerations: UIDL -> GUID mapping, RSET (undo) and "view selection"||
 ||[[http://tools.ietf.org/html/rfc1957|RFC 1957]] Some Observations on Implementations of the Post Office Protocol (POP3)||Syntax parsing problems||Don't roll-your-own syntax.  Have test process documented in standard||
@@ -35,7 +38,7 @@ inherently in a different protocol, maybe explicitly.
 ||[[http://tools.ietf.org/html/rfc4314|RFC 4314]] IMAP4 Access Control List (ACL) Extension||Clarify and expand ACL handling||See also comment on 2086 - need to support ACL handling||
 ||[[http://tools.ietf.org/html/rfc4315|RFC 4315]] Internet Message Access Protocol (IMAP) - UIDPLUS extension||Expand more on UIDPLUS||See 2359 comment - will be mooted.  GUIDs will be compulsory, even if you just use a hash of the message contents, so UIDNOTSTICKY goes away||
 ||[[http://tools.ietf.org/html/rfc4466|RFC 4466]] Collected Extensions to IMAP4 ABNF||Tidy up the ballooning synax variations||Avoid having such a complex ABNF - use a structured substrate of some sort.  It will be less human-typing-friendly, but more machine friendly||
-||[[http://tools.ietf.org/html/rfc4467|RFC 4467]] Internet Message Access Protocol (IMAP) - URLAUTH Extension||||||
+||[[http://tools.ietf.org/html/rfc4467|RFC 4467]] Internet Message Access Protocol (IMAP) - URLAUTH Extension||Authentication token||Definitely want token based access so you can authenticate once and then re-connect with the same token, at least during the same "session"||
 ||[[http://tools.ietf.org/html/rfc4468|RFC 4468]] Message Submission BURL Extension||Send a message by copying content from an IMAP store||Supplement/replace with submit via same protocol.  BURL is too complex from a "interacting systems, firewalls and authentication methods" perspective||
 ||[[http://tools.ietf.org/html/rfc4469|RFC 4469]] Internet Message Access Protocol (IMAP) CATENATE Extension||Reduce bandwidth use by manipulating partial messages on the server||Definitely want to be able to do this||
 ||[[http://tools.ietf.org/html/rfc4550|RFC 4550]] Internet Email to Support Diverse Service Environments (Lemonade) Profile||Reduce bandwidth and resource use||Need to support the same use cases||
@@ -44,16 +47,16 @@ inherently in a different protocol, maybe explicitly.
 ||[[http://tools.ietf.org/html/rfc4959|RFC 4959]] IMAP Extension for Simple Authentication and Security Layer (SASL) Initial Client Response||Auth mechanisms||Should be supported as part of Auth||
 ||[[http://tools.ietf.org/html/rfc4978|RFC 4978]] The IMAP COMPRESS Extension||Reduce bandwidth use||Compression should be part of the transport layer||
 ||[[http://tools.ietf.org/html/rfc5032|RFC 5032]] WITHIN Search Extension to the IMAP Protocol||More search extentions||Flexible enough search syntax that the use cases are possible||
-||[[http://tools.ietf.org/html/rfc5092|RFC 5092]] IMAP URL Scheme||||||
+||[[http://tools.ietf.org/html/rfc5092|RFC 5092]] IMAP URL Scheme||URL encoding of IMAP mailboxes||This is almost a replacement protocol in itself - hopefully it will map almost untouched.  The hard bit will be extra things like metadata, condstore, which it doesn't seem to consider - so it's incomplete||
 ||[[http://tools.ietf.org/html/rfc5161|RFC 5161]] The IMAP ENABLE Extension||Make sure clients don't choke on extra response information||Explicity allow space for extention.  Make test case system add random "rubbish" where it's allowed to make sure clients/servers don't complain||
 ||[[http://tools.ietf.org/html/rfc5162|RFC 5162]] IMAP4 Extensions for Quick Mailbox Resynchronization||Fix "unaware of expunge" deficiency in CONDSTORE||new protocol will not have this particular deficiency||
-||[[http://tools.ietf.org/html/rfc5182|RFC 5182]] IMAP Extension for Referencing the Last SEARCH Result||||||
+||[[http://tools.ietf.org/html/rfc5182|RFC 5182]] IMAP Extension for Referencing the Last SEARCH Result||Avoid sending message set data backwards and forwards||Ideally, part of a more general "compose commands" - but the ability to store a search result for later manipulation will be needed||
 ||[[http://tools.ietf.org/html/rfc5228|RFC 5228]] Sieve: An Email Filtering Language||(and all the extentions)||Support Sieve - possibly even sieve fragments as "run this filter on this mailbox".  Common use case is "add a rule to filter messages matching X into a folder, and also apply that to the messages in INBOX now so existing ones get copied"||
 ||[[http://tools.ietf.org/html/rfc5255|RFC 5255]] Internet Message Access Protocol Internationalization||Support multiple languages||Definitely, need to keep this - language negotiation needs to be part of the initial connection||
 ||[[http://tools.ietf.org/html/rfc5256|RFC 5256]] Internet Message Access Protocol - SORT and THREAD Extensions||Server-side support for message ordering||Doesn't go far enough - particularly across folders.  Also fuzzy searching and partial response is an interesting area||
 ||[[http://tools.ietf.org/html/rfc5257|RFC 5257]] Internet Message Access Protocol - ANNOTATE Extension||Like metadata for folders, but for messages||Yet another axis of data - need to merge with keywords and regularise.  Specify quota and ACL handling (currently different for keywords and annotations).  Specify shared vs private "same keyword", e.g. shared \Seen and private \Seen ?||
 ||[[http://tools.ietf.org/html/rfc5258|RFC 5258]] Internet Message Access Protocol version 4 - LIST Command Extensions||Was there really a point? Except making LIST extensible and giving tiny bandwidth improvements and tiny server performance improvements||There are a few cases covering list andling - it's a lot more complex than the small amount of actual data involved justifies.  Massive deadwood cleaning required here||
-||[[http://tools.ietf.org/html/rfc5321|RFC 5321]] Simple Mail Transfer Protocol||||||
+||[[http://tools.ietf.org/html/rfc5321|RFC 5321]] Simple Mail Transfer Protocol||Submission of email||Need to consider interaction with submission if we support submission||
 ||[[http://tools.ietf.org/html/rfc5423|RFC 5423]] Internet Message Store Events||More detailed information about changes than IDLE provides||Good notification architecture is essential - absorb all this||
 ||[[http://tools.ietf.org/html/rfc5464|RFC 5464]] The IMAP METADATA Extension||Annotations for mailboxes||Along with Special-Use, metadata about mailboxes||
 ||[[http://tools.ietf.org/html/rfc5465|RFC 5465]] The IMAP NOTIFY Extension||Easy way to get new email notifications for all mailboxes||Combine with message store events||
@@ -70,3 +73,4 @@ inherently in a different protocol, maybe explicitly.
 ||[[http://tools.ietf.org/html/rfc6237|RFC 6237]] IMAP4 Multimailbox SEARCH Extension||Simplifying "search from all mailboxes" for clients||And this!  But this one has a problem, it doesn't let you sort across folders, which makes it only half the solution.  Need to fix the sort as well||
 
 (auto-generated from the list stored at [[http://github.com/brong/New-Mail-Protocol/|Github]])
+
