@@ -52,7 +52,7 @@ sub read_wiki {
         while (<FH>) {
             my @bits = split /[|]{2}/, $_;
             my $id = $bits[1];
-            next unless $id =~ m/RFC (\d+)\]/;
+            next unless $id =~ m/RFC (\d+)/;
             $data{$1} = {
                 desc => $bits[2],
                 res  => $bits[3],
