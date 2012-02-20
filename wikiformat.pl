@@ -47,12 +47,18 @@ exit 0;
 
 sub read_wiki {
     my $file = shift;
-    open(FH, "<$file") || return {};
-    while (<FH>) {
-	chomp;
-	my @bits = split "||", $_;
-	use Data::Dumper;
-	print Dumper (\@bits);
-    };
-    close(FH);
+    my %data;
+    if (open(FH, "<$file")) {
+        while (<FH>) {
+            my @bits = split /[|]{2}/, $_;
+            my $id = $bits[1];
+            next unless $id =~ m/RFC (\d+)\]/;
+            $data{$1} = {
+                desc => $bits[2],
+                res  => $bits[3],
+            };
+        };
+        close(FH);
+    }
+    return \%data;
 }
