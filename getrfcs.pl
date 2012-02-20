@@ -7,6 +7,9 @@ if (-f $wikifile) {
     $wikidata = read_wiki($wikifile);
 }
 
+print "# Source file with RFC Numbers to generate a nice list\n";
+print "\n";
+
 foreach my $key (sort {$a <=> $b } keys %$wikidata) {
     print "$key\n";
 }
